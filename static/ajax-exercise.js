@@ -19,9 +19,8 @@ function showWeather(evt) {
   const url = '/weather.json';
   const formData = {zipcode: $('#zipcode-field').val()};
 
-  $.get(url, formData, response => {
-    alert(`Weather forecast: ${response.forecast}`);
-    // $('#weather=info').html(`Weather forecast for today: ${response.forecast}`);
+  $.get(url, formData, (response) => {
+    $('#weather-info').html(`Weather forecast for today: ${response.forecast}`);
   });
 }
 
@@ -32,14 +31,15 @@ function orderMelons(evt) {
   evt.preventDefault();
 
   const formInputs = {
-    quantity: $('#qty-field').val(),
-    type: $('#melon-type-field').val(),
+    qty: $('#qty-field').val(),
+    melon_type: $('#melon-type-field').val(),
   };
-  console.log(formInputs);
 
-  $.post('/order-melons.json', formInputs, response => {
+  const url = 'order-melons.json';
+
+  $.post(url, formInputs, (response) => {
     if (response.code === 'ERROR') {
-      $('#order-status').addClass(".order-error");
+      $('#order-status').addClass('order-error');
       $('#order-status').html(response.msg);
     } else {
       $('#order-status').html(response.msg);
